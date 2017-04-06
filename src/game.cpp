@@ -27,13 +27,34 @@ SDL_Rect rect(int x, int y, int w, int h) {
 	return rect;
 }
 
-GameWindow::GameWindow(int w,int h, SDL_Color bg) {
+GameWindow::GameWindow(int w,int h, SDL_Color bg, bool waitForSync) {
 	width = w;
 	height = h;
 	background = bg;
+	vsync = waitForSync;
 	SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_OPENGL, &window, &renderer);
 	surf = SDL_GetWindowSurface(window);
 
+	//set vsync
+	if(waitForSync && SDL_GL_SetSwapInterval(-1) < 0) SDL_GL_SetSwapInterval(1);
+
+}
+
+void GameWindow::setOption(Window_Option_t option, Window_Option_Value_t value) {
+	if(option == VSYNC) {
+		if(value == ON && SDL_GL_SetSwapInterval(-1) < 0) { SDL_GL_SetSwapInterval(1);
+			vsync = true;
+		} else if(value == OFF) {
+			SDL_GL_SetSwapInterval(0);
+			vsync = false;
+		}
+	}
+}
+
+void GameWindow::setOption(Window_Option_t option, const void* value) {
+	if(option == BACKGROUND_COLOR) {
+		background = *((SDL_Color*) value);
+	}
 }
 
 void GameWindow::setColor(SDL_Color col) {

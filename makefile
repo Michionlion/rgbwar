@@ -6,7 +6,7 @@ LINKER_FLAGS = -lSDL2
 EXEC = rgbw
 
 #This is the target that compiles our executable
-$(EXEC) : $(SOURCES)
+$(EXEC) : $(SOURCES) clean
 	$(CC) $(SOURCES) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(EXEC)
 
 # To remove generated files
