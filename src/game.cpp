@@ -27,6 +27,14 @@ SDL_Rect rect(int x, int y, int w, int h) {
 	return rect;
 }
 
+SDL_Point point(int x, int y) {
+	SDL_Point p;
+	p.x = x;
+	p.y = y;
+
+	return p;
+}
+
 GameWindow::GameWindow(int w,int h, SDL_Color bg, bool waitForSync) {
 	width = w;
 	height = h;
@@ -64,6 +72,11 @@ void GameWindow::setColor(SDL_Color col) {
 void GameWindow::render(SDL_Rect rect, SDL_Color col) {
 	setColor(col);
 	SDL_RenderFillRect(renderer, &rect);
+}
+
+void GameWindow::render(SDL_Point p, SDL_Color col) {
+	setColor(col);
+	SDL_RenderDrawPoint(renderer, p.x, p.y);
 }
 
 void GameWindow::refresh() {

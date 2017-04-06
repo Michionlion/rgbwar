@@ -34,3 +34,4 @@ public:
 
 SDL_Rect rect(int, int, int, int);
 SDL_Color color(Uint8, Uint8, Uint8, Uint8);
+SDL_Point point(int,int);
