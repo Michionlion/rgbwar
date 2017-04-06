@@ -11,4 +11,4 @@ $(EXEC) : $(SOURCES)
 
 # To remove generated files
 clean:
-	rm -rf $(EXEC)
+	rm -f $(EXEC)
