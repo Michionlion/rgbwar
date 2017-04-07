@@ -4,8 +4,9 @@
 Particle::Particle(float x, float y) {
 	this->x = x;
 	this->y = y;
-	dx = rand() / (float) RAND_MAX * 2.0 - 1.0;
-	dy = rand() / (float) RAND_MAX * 2.0 - 1.0;
+	dx=dy=0;
+	// dx = rand() / (float) RAND_MAX * 2.0 - 1.0;
+	// dy = rand() / (float) RAND_MAX * 2.0 - 1.0;
 }
 
 PointSim::PointSim(int num, float xrange, float yrange) {
@@ -22,28 +23,39 @@ PointSim::PointSim(int num, float xrange, float yrange) {
 void PointSim::render(GameWindow& window) {
 	auto part = particles.begin();
 	window.setColor(color(0,30,255,5));
+	float x,y,angle,f;
 	for(int i = 0; i++ < numParticles; part++) {
-		// if(part->x > window.width-1) {
-		// 	part->x = window.width-1;
-		// 	part->dx = -part->dx;
-		// }
-		// else if(part->x < 0) {
-		// 	part->x = 0;
-		// 	part->dx = -part->dx;
-		// }
-		// if(part->y > window.height-1) {
-		// 	part->y = window.height-1;
-		// 	part->dy = -part->dy;
-		// }
-		// else if(part->y < 0) {
-		// 	part->y = 0;
-		// 	part->dy = -part->dy;
-		// }
+		if(part->x > window.width-1) {
+			part->x = window.width-1;
+			// part->dx = -part->dx;
+		}
+		else if(part->x < 0) {
+			part->x = 0;
+			// part->dx = -part->dx;
+		}
+		if(part->y > window.height-1) {
+			part->y = window.height-1;
+			// part->dy = -part->dy;
+		}
+		else if(part->y < 0) {
+			part->y = 0;
+			// part->dy = -part->dy;
+		}
+
+		//error and waayyyy too slow
+
 		auto other = particles.begin();
 		for(int j = 0; j++ < numParticles; other++) {
-			float f = 1.0 / fabs((other->x - part->x)*(other->x - part->x)+((other->y - part->y)*(other->y - part->y)));
-
+			x = other->x - part->x;
+			y = other->y - part->y;
+			if(x==y && y==0) continue;
+			angle = atan2(y, x);
+			f = 1.0 / (x*x + y*y);
+			part->dx += f*cos(angle);
+			part->dx += f*sin(angle);
+			// printf("ang:%f\n", angle);
 		}
-		window.pixel(part->x+=part->dx, part->y+=part->dy);
+		// printf("dx:%f, dy: %f\n", part->dx, part->dy);
+		window.pixel((part->x+=part->dx)/scale, (part->y+=part->dy)/scale);
 	}
 }

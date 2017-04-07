@@ -18,7 +18,7 @@ int main(int argc, char const *argv[]) {
 	window.refresh();
 	fps.endFrame();
 
-	PointSim points(2000, window.width, window.height);
+	PointSim points(200, window.width, window.height);
 
 	bool running = true, debug = true;
 	// const Uint8* keys = SDL_GetKeyboardState(NULL);
