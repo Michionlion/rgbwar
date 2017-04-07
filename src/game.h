@@ -12,6 +12,7 @@ public:
 	GameWindow(int,int, SDL_Color, bool);
 	void setColor(const SDL_Color);
 	void render(const SDL_Rect, const SDL_Color);
+	void pixel(int,int);
 	void refresh(void);
 	void clear(void);
 	void destroy(void);

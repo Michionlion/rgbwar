@@ -1,19 +1,13 @@
 #include <SDL2/SDL.h>
+#include <forward_list>
 #include "game.h"
-
-struct Particle {
-	float x,y,dx,dy;
-	Particle(void);
-	Particle(float,float);
-	void move(void);
-};
+#include "particles.h"
 
 class PointSim {
 public:
-	PointSim(int);
-	~PointSim(void);
+	PointSim(int,float,float);
 	void render(GameWindow&);
 private:
-	Particle* particles;
+	std::forward_list<Particle> particles;
 	int numParticles;
 };

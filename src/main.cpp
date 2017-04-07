@@ -1,6 +1,5 @@
 #include <iostream>
 #include <SDL2/SDL.h>
-#include "game.h"
 #include "fps.h"
 #include "points.h"
 #define MSP 0.16
@@ -13,7 +12,7 @@ int main(int argc, char const *argv[]) {
 
 	GameWindow window(640,400, color(0,0,0,255), true);
 	FPSCounter fps;
-	PointSim points(1000);
+	PointSim points(20, 640, 400);
 
 	bool running = true;
 	// const Uint8* keys = SDL_GetKeyboardState(NULL);

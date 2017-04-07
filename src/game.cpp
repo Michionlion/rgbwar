@@ -74,9 +74,8 @@ void GameWindow::render(SDL_Rect rect, SDL_Color col) {
 	SDL_RenderFillRect(renderer, &rect);
 }
 
-void GameWindow::render(SDL_Point p, SDL_Color col) {
-	setColor(col);
-	SDL_RenderDrawPoint(renderer, p.x, p.y);
+void GameWindow::pixel(int x, int y) {
+	SDL_RenderDrawPoint(renderer, x, y);
 }
 
 void GameWindow::refresh() {

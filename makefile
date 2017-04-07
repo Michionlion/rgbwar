@@ -1,7 +1,7 @@
 #files to compile
 SOURCES = $(wildcard src/*.cpp)
 CC = g++
-COMPILER_FLAGS = -w
+COMPILER_FLAGS = -std=c++11 -w
 LINKER_FLAGS = -lSDL2
 EXEC = rgbw
 
