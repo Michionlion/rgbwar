@@ -10,11 +10,17 @@ int main(int argc, char const *argv[]) {
 	Game game(ready);
 	if(!ready) return -1;
 
-	GameWindow window(640,400, color(0,0,0,255), true);
+	GameWindow window(640,400, color(0,0,0,255), false);
 	FPSCounter fps;
-	PointSim points(20, 640, 400);
 
-	bool running = true;
+	fps.startFrame();
+	window.clear();
+	window.refresh();
+	fps.endFrame();
+
+	PointSim points(2000, window.width, window.height);
+
+	bool running = true, debug = true;
 	// const Uint8* keys = SDL_GetKeyboardState(NULL);
 	while (running) {
 		fps.startFrame();
@@ -24,23 +30,30 @@ int main(int argc, char const *argv[]) {
                 running = false;
             } else if(e.key.repeat == false && e.key.keysym.scancode == SDL_SCANCODE_V && e.type == SDL_KEYDOWN) {
 				window.setOption(VSYNC, window.vsync ? OFF : ON);
+				printf("VSYNC: %s\n", window.vsync ? "ON" : "OFF");
+			} else if(e.key.repeat == false && e.key.keysym.scancode == SDL_SCANCODE_GRAVE && e.type == SDL_KEYDOWN) {
+				debug = !debug;
 			}
         }
 
 
 
 
+
+		if(debug) printf("Rendertime: %0.02fms, %0.1f FPS\n", fps.toMillis(fps.getFRT()), fps.getFPS());
+
 		window.clear();
 		points.render(window);
 		window.refresh();
 		fps.endFrame();
 
-		printf("Rendertime: %0.02fms, %0.02f FPS\n", fps.toMillis(fps.getFRT()), fps.getFPS());
-
 		if(!window.vsync) {
 			float t = fps.getSleepTimeFor(60);
-			printf("sleeping %f\n", t);
-			if(t > 0) SDL_Delay((Uint32) t);
+
+			if(t > 0) {
+				SDL_Delay((Uint32) t);
+				if(debug) printf("sleeping %f\n", t);
+			}
 		}
     }
 

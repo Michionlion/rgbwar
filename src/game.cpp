@@ -50,7 +50,8 @@ GameWindow::GameWindow(int w,int h, SDL_Color bg, bool waitForSync) {
 
 void GameWindow::setOption(Window_Option_t option, Window_Option_Value_t value) {
 	if(option == VSYNC) {
-		if(value == ON && SDL_GL_SetSwapInterval(-1) < 0) { SDL_GL_SetSwapInterval(1);
+		if(value == ON) {
+			if(SDL_GL_SetSwapInterval(-1) < 0) SDL_GL_SetSwapInterval(1);
 			vsync = true;
 		} else if(value == OFF) {
 			SDL_GL_SetSwapInterval(0);
