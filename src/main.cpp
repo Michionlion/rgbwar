@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
 	PointSim points(200, window.width, window.height);
 
 	bool running = true, debug = true;
-	// const Uint8* keys = SDL_GetKeyboardState(NULL);
+	const Uint8* keys = SDL_GetKeyboardState(NULL);
 	while (running) {
 		fps.startFrame();
         SDL_Event e;
@@ -36,9 +36,13 @@ int main(int argc, char const *argv[]) {
 			}
         }
 
-
-
-
+		if(keys[SDL_SCANCODE_UP]) {
+			points.scale(-0.05);
+			printf("Scale: %f\n", points.getScale());
+		} else if(keys[SDL_SCANCODE_DOWN]) {
+			points.scale(0.05);
+			printf("Scale: %f\n", points.getScale());
+		}
 
 		if(debug) printf("Rendertime: %0.02fms, %0.1f FPS\n", fps.toMillis(fps.getFRT()), fps.getFPS());
 
@@ -48,7 +52,7 @@ int main(int argc, char const *argv[]) {
 		fps.endFrame();
 
 		if(!window.vsync) {
-			float t = fps.getSleepTimeFor(60);
+			float t = fps.getSleepTimeFor(30);
 
 			if(t > 0) {
 				SDL_Delay((Uint32) t);

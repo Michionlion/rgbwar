@@ -7,9 +7,10 @@ class PointSim {
 public:
 	PointSim(int,float,float);
 	void render(GameWindow&);
-	void setScale(float);
+	void scale(float);
+	float getScale(void);
 private:
 	std::forward_list<Particle> particles;
 	int numParticles;
-	float scale;
+	float curScale;
 };
